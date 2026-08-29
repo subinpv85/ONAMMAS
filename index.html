@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MAS Onam Celebration 2026</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Georgia', serif; }
@@ -37,26 +37,29 @@
         .music-toggle:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4); }
         .invite-container { position: relative; width: 100%; max-width: 450px; height: 100vh; perspective: 1000px; margin-top: 0; }
         .envelope { 
-            position: absolute; 
-            bottom: 10%;
-            width: 100%; 
-            height: 95%; 
-            background: url('bgnk.jpg') no-repeat center center; 
-            background-size: cover; 
-            border-radius: 12px 12px 12px 12px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6); 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: flex-end; 
-            align-items: center; 
-            padding: 20px 25px 40px 25px; 
-            text-align: center; 
-            transition: all 0.6s ease; 
-            transform-origin: top center; 
-            z-index: 2; 
-            cursor: pointer; 
-            overflow: hidden; 
-        }
+    position: absolute; 
+    top: 1.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; 
+    max-width: 450px;
+    height: 97%; 
+    background: url('bgnk.jpg') no-repeat center center; 
+    background-size: cover; 
+    border-radius: 12px; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: flex-end; 
+    align-items: center; 
+    padding: 10px 15px 15px 15px; /* Reduced bottom padding */
+    text-align: center; 
+    transition: all 0.6s ease; 
+    transform-origin: top center; 
+    z-index: 2; 
+    cursor: pointer; 
+    overflow: hidden; 
+}
         .envelope:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
         .envelope.open { transform: rotateX(-110deg); opacity: 0; pointer-events: none; }
         .kadakali-overlay {
@@ -138,21 +141,21 @@
         }
 
         /* Countdown Timer Styling */
-        .countdown-container {
-            position: absolute;
-            bottom: 1%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85%;
-            background: rgba(74, 4, 4, 0.85);
-            border: 2px solid #d4af37;
-            border-radius: 12px;
-            padding: 12px 10px;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            color: #d4af37;
-            pointer-events: none;
-        }
+    .countdown-container {
+    position: absolute;
+    bottom: 2%; /* Elevated slightly to prevent mobile clipping */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    background: rgba(74, 4, 4, 0.85);
+    border: 2px solid #d4af37;
+    border-radius: 12px;
+    padding: 8px 10px; /* Compact padding */
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    color: #d4af37;
+    pointer-events: none;
+}
 
         .countdown-title {
             font-size: 0.8rem;
@@ -330,6 +333,60 @@
             50% { filter: drop-shadow(0px 0px 25px rgba(212, 175, 55, 1)); }
             100% { filter: drop-shadow(0px 0px 10px rgba(212, 175, 55, 0.6)); }
         }
+/* Mobile Responsive Adjustments */
+@media screen and (max-width: 480px) {
+    .invite-container {
+        height: 100dvh; /* Dynamic height for mobile address bar behavior */
+    }
+
+    .envelope {
+        top: 1%;
+        height: 98%;
+        padding: 10px;
+    }
+
+    /* Keep Kathakali graphic proportional */
+    .kadakali-overlay {
+        bottom: 37%;
+        width: 28%;
+    }
+
+    /* Shift side button groups slightly higher to avoid overlapping countdown */
+    .side-links-right {
+        right: 2%;
+        bottom: 36%;
+    }
+
+    .side-links-left {
+        left: 2%;
+        bottom: 40%;
+    }
+
+    .side-btn {
+        padding: 5px 8px;
+        font-size: 0.62rem;
+    }
+
+    /* Keep countdown timer safely above the lower edge */
+    .countdown-container {
+        bottom: 2%;
+        width: 92%;
+        padding: 6px 4px;
+    }
+
+    .countdown-title {
+        font-size: 0.7rem;
+        margin-bottom: 4px;
+    }
+
+    .timer-value {
+        font-size: 0.8rem;
+    }
+
+    .timer-label {
+        font-size: 0.55rem;
+    }
+}
     </style>
 </head>
 <body>
