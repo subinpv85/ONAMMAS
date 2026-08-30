@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MAS Onam Celebration 2026</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Georgia', serif; }
+        body { 
+            background: url('bgnk.jpeg') no-repeat center center fixed; 
+            background-size: cover; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start; 
+            min-height: 100vh; 
+            overflow: hidden; 
+            padding: 0; 
+        }
+        .music-toggle { 
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+            background: #d4af37; 
+            color: #4a0404; 
+            border: 2px solid #4a0404; 
+            border-radius: 50%; 
+            width: 50px; 
+            height: 50px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 1.5rem; 
+            cursor: pointer; 
+            z-index: 11; 
+            transition: all 0.3s ease; 
+        }
+        .music-toggle:hover { transform: scale(1.1); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4); }
+        .invite-container { position: relative; width: 100%; max-width: 450px; height: 100vh; perspective: 1000px; margin-top: 0; }
+        .envelope { 
+            position: absolute; 
+            bottom: 2%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%; 
+            max-width: 450px;
+            height: 97%; 
+            background: url('bgnk.jpg') no-repeat center center; 
+            background-size: cover; 
+            border-radius: 12px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-end; 
+            align-items: center; 
+            padding: 10px 15px 15px 15px;
+            text-align: center; 
+            transition: all 0.6s ease; 
+            transform-origin: top center; 
+            z-index: 2; 
+            cursor: pointer; 
+            overflow: hidden; 
+        }
+        .envelope:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+        .envelope.open { transform: rotateX(-110deg); opacity: 0; pointer-events: none; }
+        .kadakali-overlay {
+            position: absolute;
+            bottom: 33.3%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30%;
+            height: auto;
+            pointer-events: none;
+            filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.5));
+            animation: goldGlowPulse 3s infinite ease-in-out;
+        }
+
+        /* Base container style for both side buttons */
+        .side-links-container {
+            position: absolute;
+            bottom: 30%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 4;
+        }
+
+        /* Right side positioning */
+        .side-links-right {
+            right: 3%;
+            bottom: 32.5%;
+        }
+
+        /* Left side positioning */
+        .side-links-left {
+            left: 3%;
+            bottom: 32.5%;
+        }
+
+        .side-btn {
+            background: rgba(74, 4, 4, 0.85);
+            color: #d4af37;
+            border: 1.5px solid #d4af37;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: pulse-side 2.5s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        /* Stagger animation timing */
+        .side-links-right .side-btn:nth-child(1) { animation-delay: 0s; }
+        .side-links-right .side-btn:nth-child(2) { animation-delay: 0.3s; }
+        .side-links-right .side-btn:nth-child(3) { animation-delay: 0.6s; }
+
+        .side-links-left .side-btn:nth-child(1) { animation-delay: 0.9s; }
+        .side-links-left .side-btn:nth-child(2) { animation-delay: 1.2s; }
+        .side-links-left .side-btn:nth-child(3) { animation-delay: 1.5s; }
+
+        .side-btn:hover {
+            transform: scale(1.08);
+            background: #d4af37;
+            color: #4a0404;
+            box-shadow: 0 6px 18px rgba(212, 175, 55, 0.8);
+        }
+
+        @keyframes pulse-side {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 12px rgba(212, 175, 55, 0.6); }
+            100% { transform: scale(1); }
+        }
+
+        /* Countdown Timer Styling */
+        .countdown-container {
+            position: absolute;
+            bottom: 2%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background: rgba(74, 4, 4, 0.85);
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 8px 10px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            color: #d4af37;
+            pointer-events: none;
+        }
+
+        .countdown-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .timer-display {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .timer-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .timer-value {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .timer-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: #f0e68c;
+        }
+
+        /* Page 2 Styling */
+        .card { 
+            position: absolute; 
+            top: 1.5%;
+            left: 0;
+            width: 100%; 
+            height: 97.5%; 
+            background: url('2.jpeg') no-repeat center top; 
+            background-size: cover; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            border: none; 
+            opacity: 0; 
+            transform: scale(0.8) translateY(50px); 
+            pointer-events: none; 
+            transition: all 0.6s ease 0.2s; 
+            z-index: 1; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 25px 25px 400px 25px;
+        }
+        .card.reveal { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+
+        .page2-back-btn {
+            width: 50%;
+            background: rgba(74, 4, 4, 0.85);
+            color: #d4af37;
+            border: 2px solid #d4af37;
+            padding: 10px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            animation: blink-button 1.5s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .page2-back-btn:hover {
+            background: #d4af37;
+            color: #4a0404;
+            transform: scale(1.05);
+        }
+
+        @keyframes blink-button {
+            0% { opacity: 1; box-shadow: 0 0 5px rgba(212, 175, 55, 0.4); }
+            50% { opacity: 0.3; box-shadow: 0 0 20px rgba(212, 175, 55, 0.9); }
+            100% { opacity: 1; box-shadow: 0 0 5px rgba(212, 175, 55, 0.4); }
+        }
+
+        /* Overlay Pages Base Styling */
+        .highlights-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(74, 4, 4, 0.95);
+            background-image: linear-gradient(135deg, rgba(74, 4, 4, 0.95) 0%, rgba(20, 0, 0, 0.98) 100%);
+            border: 4px solid #d4af37;
+            border-radius: 0 0 12px 12px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            color: #fff;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(100%);
+            transition: all 0.5s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .highlights-page.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .highlights-title {
+            color: #d4af37;
+            font-size: 1.6rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px dashed #d4af37;
+            padding-bottom: 10px;
+        }
+
+        .highlight-item {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+        }
+
+        .highlight-item h3 {
+            color: #ffd700;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .highlight-item p {
+            font-size: 0.85rem;
+            color: #eee;
+            line-height: 1.3;
+        }
+
+        .back-btn {
+            margin-top: 30px;
+            background: #d4af37;
+            color: #4a0404;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #fff;
+            color: #4a0404;
+        }
+
+        @keyframes goldGlowPulse {
+            0% { filter: drop-shadow(0px 0px 10px rgba(212, 175, 55, 0.6)); }
+            50% { filter: drop-shadow(0px 0px 25px rgba(212, 175, 55, 1)); }
+            100% { filter: drop-shadow(0px 0px 10px rgba(212, 175, 55, 0.6)); }
+        }
+
+        /* Contact Page Custom Styling */
+        .contact-subtext {
+            text-align: center;
+            color: #eee;
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+            font-style: italic;
+        }
+
+        .contact-card {
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-left: 4px solid #d4af37;
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: #ffd700;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+        }
+
+        .contact-info h3 {
+            color: #ffd700;
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+            font-weight: bold;
+        }
+
+        .contact-role {
+            display: inline-block;
+            color: #f0e68c;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .action-btn {
+            padding: 6px 10px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .call-btn {
+            background: rgba(212, 175, 55, 0.2);
+            color: #ffd700;
+            border: 1px solid #d4af37;
+        }
+
+        .call-btn:hover {
+            background: #d4af37;
+            color: #4a0404;
+        }
+
+        .wa-btn {
+            background: rgba(35, 165, 90, 0.25);
+            color: #25d366;
+            border: 1px solid #25d366;
+        }
+
+        .wa-btn:hover {
+            background: #25d366;
+            color: #ffffff;
+        }
+
+        /* Mobile Responsive Adjustments */
+        @media screen and (max-width: 480px) {
+            .invite-container {
+                height: 100dvh;
+            }
+
+            .envelope {
+                top: 1%;
+                height: 98%;
+                padding: 10px;
+            }
+
+            .kadakali-overlay {
+                bottom: 37%;
+                width: 28%;
+            }
+
+            .side-links-right {
+                right: 2%;
+                bottom: 36%;
+            }
+
+            .side-links-left {
+                left: 2%;
+                bottom: 36%;
+            }
+
+            .side-btn {
+                padding: 5px 8px;
+                font-size: 0.62rem;
+            }
+
+            .countdown-container {
+                bottom: 2%;
+                width: 92%;
+                padding: 6px 4px;
+            }
+
+            .countdown-title {
+                font-size: 0.7rem;
+                margin-bottom: 4px;
+            }
+
+            .timer-value {
+                font-size: 0.8rem;
+            }
+
+            .timer-label {
+                font-size: 0.55rem;
+            }
+
+            .contact-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .contact-actions {
+                width: 100%;
+            }
+            .action-btn {
+                flex: 1;
+                text-align: center;
+            }
+        }
+/* Enhanced Bank Details Page */
+.bank-card {
+    background: linear-gradient(145deg, rgba(212, 175, 55, 0.15), rgba(74, 4, 4, 0.6));
+    border: 1.5px solid #d4af37;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+}
+
+.bank-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+}
+
+.bank-label {
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    color: #f0e68c;
+    text-transform: uppercase;
+}
+
+.bank-badge {
+    background: #d4af37;
+    color: #4a0404;
+    font-size: 0.65rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.bank-field-group {
+    margin-bottom: 12px;
+}
+
+.bank-field-title {
+    display: block;
+    font-size: 0.7rem;
+    color: #f0e68c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+
+.bank-field-value {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffd700;
+    letter-spacing: 0.5px;
+}
+
+.bank-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.bank-field-value-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.copy-btn {
+    background: rgba(212, 175, 55, 0.2);
+    color: #ffd700;
+    border: 1px solid #d4af37;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+    background: #d4af37;
+    color: #4a0404;
+}
+
+.payment-note {
+    background: rgba(212, 175, 55, 0.08);
+    border-left: 3px solid #d4af37;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    color: #eee;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.payment-note strong {
+    color: #ffd700;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.payment-note span {
+    color: #ffd700;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+
+<audio id="bgMusic" src="onam.MP3" loop autoplay muted preload="auto"></audio>
+<button class="music-toggle" id="musicBtn" onclick="toggleMusic()">🔇</button>
+
+<div class="invite-container">
+    <div class="envelope" id="envelope" onclick="openEnvelope(event)">
+        <img src="kadakali.png" alt="Kathakali" class="kadakali-overlay">
+
+        <!-- Right Side Buttons Container -->
+        <div class="side-links-container side-links-right" onclick="event.stopPropagation()">
+            <button class="side-btn" onclick="openHighlights()">
+                ✨ Highlights
+            </button>
+            
+            <a href="https://maps.google.com/?q=Kepier+Academy+Dairy+Lane+Houghton+le+Spring+DH4+5BH" target="_blank" class="side-btn">
+                📍 Direction
+            </a>
+
+            <a href="https://www.facebook.com/subinpv85" target="_blank" class="side-btn">
+                🎨 Designer
+            </a>
+        </div>
+
+        <!-- Left Side Buttons Container -->
+        <div class="side-links-container side-links-left" onclick="event.stopPropagation()">
+            <button class="side-btn" onclick="openBankDetails()">
+                💳 Pay Dues
+            </button>
+
+            <button class="side-btn" onclick="openPoll()">
+    📊 RSVP / Poll
+</button>
+
+            <button class="side-btn" onclick="openContact()">
+                📞 Contact Us
+            </button>
+        </div>
+        
+        <div class="countdown-container">
+            <div class="countdown-title">Event Starts In</div>
+            <div class="timer-display">
+                <div class="timer-box">
+                    <span class="timer-value" id="days">00</span>
+                    <span class="timer-label">Days</span>
+                </div>
+                <span>:</span>
+                <div class="timer-box">
+                    <span class="timer-value" id="hours">00</span>
+                    <span class="timer-label">Hours</span>
+                </div>
+                <span>:</span>
+                <div class="timer-box">
+                    <span class="timer-value" id="minutes">00</span>
+                    <span class="timer-label">Mins</span>
+                </div>
+                <span>:</span>
+                <div class="timer-box">
+                    <span class="timer-value" id="seconds">00</span>
+                    <span class="timer-label">Secs</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Highlights Page Overlay -->
+    <div class="highlights-page" id="highlightsPage">
+        <h2 class="highlights-title">✨ Event Highlights</h2>
+        
+        <div class="highlight-item">
+            <h3>👑 The Grand Maveli Entry</h3>
+            <p>Grand welcome ceremony for King Mahabali with cultural processions.</p>
+        </div>
+        
+        <div class="highlight-item">
+            <h3>🥁 Mega Thiruvathira</h3>
+            <p>Traditional percussion rhythms followed by traditional dance performances.</p>
+        </div>
+        
+        
+
+        <div class="highlight-item">
+            <h3>🎭 Cultural Programs</h3>
+            <p>Stage performances, comedy skits, and music shows by community members.</p>
+        </div>
+<div class="highlight-item">
+            <h3>🌺 Grand Onasadya</h3>
+            <p>Traditional feast served on banana leaves featuring over 21 authentic Kerala delicacies.</p>
+        </div>
+
+        <button class="back-btn" onclick="closeHighlights()">Back to Home 🏠</button>
+    </div>
+
+    <!-- Bank Details Overlay -->
+    <!-- Bank Details Overlay -->
+<div class="highlights-page" id="bankPage">
+    <h2 class="highlights-title">💳 Subscription & Payments</h2>
+    
+    <p class="contact-subtext">Please transfer your subscription fees using the official account details below:</p>
+
+    <!-- Professional Bank Card Container -->
+    <div class="bank-card">
+        <div class="bank-card-header">
+            <span class="bank-label">OFFICIAL ACCOUNT</span>
+            <span class="bank-badge">MAS UK</span>
+        </div>
+
+        <div class="bank-field-group">
+            <span class="bank-field-title">Account Name</span>
+            <div class="bank-field-value">Malayalee Association Sunderland</div>
+        </div>
+
+        <div class="bank-row">
+            <div class="bank-field-group">
+                <span class="bank-field-title">Sort Code</span>
+                <div class="bank-field-value-wrap">
+                    <span class="bank-field-value" id="sortCode">40-43-62</span>
+                    <button class="copy-btn" onclick="copyToClipboard('sortCode', this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="bank-field-group">
+                <span class="bank-field-title">Account Number</span>
+                <div class="bank-field-value-wrap">
+                    <span class="bank-field-value" id="accountNo">30115592</span>
+                    <button class="copy-btn" onclick="copyToClipboard('accountNo', this)">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Reference Note -->
+    <div class="payment-note">
+        <strong>📌 Payment Reference:</strong>
+        <p>Please include your <span>Uniqe Ref Number</span> in the payment reference field when making bank transfers.</p>
+    </div>
+
+    <button class="back-btn" onclick="closeBankDetails()">Back to Home 🏠</button>
+</div>
+<!-- WhatsApp Poll Guidance Overlay -->
+<div class="highlights-page" id="pollPage">
+    <h2 class="highlights-title">📊 Event RSVP Poll</h2>
+    
+    <p class="contact-subtext">Our headcount poll for MAS AAVESHAM 2026 is now live! Please cast your vote in our official WhatsApp community group!</p>
+
+    <div class="contact-card" style="flex-direction: column; text-align: center; gap: 12px; padding: 18px;">
+        <div class="contact-info">
+            <h3 style="font-size: 1.05rem; color: #ffd700; margin-bottom: 10px;">How to Submit Your Numbers:</h3>
+            <ol style="text-align: left; font-size: 0.85rem; color: #eee; margin: 0 0 10px 18px; line-height: 1.7;">
+                <li>Tap <strong>Open WhatsApp</strong> below.</li>
+                <li>Select the <strong>MAS Community Group</strong> chat.</li>
+                <li>Vote on the pinned <strong>Onam Headcount Poll</strong> with your total family count.</li>
+            </ol>
+        </div>
+
+        <a href="https://wa.me/" target="_blank" class="page2-back-btn" style="width: 100%; text-decoration: none; margin-top: 5px;">
+            💬 Open WhatsApp Now
+        </a>
+    </div>
+
+    <button class="back-btn" onclick="closePoll()">Back to Home 🏠</button>
+</div>
+
+    <!-- Contact Page Overlay -->
+    <div class="highlights-page" id="contactPage">
+        <h2 class="highlights-title">📞 Contact Us</h2>
+        
+        <p class="contact-subtext">For inquiries and registrations, please reach out to our team:</p>
+
+        <div class="contact-card">
+            <div class="contact-info">
+                <h3>Mr Vinod Gopalan Nair</h3>
+                <span class="contact-role">President</span>
+            </div>
+            <div class="contact-actions">
+                <a href="tel:+447950963472" class="action-btn call-btn">📞 Call</a>
+                <a href="https://wa.me/447950963472" target="_blank" class="action-btn wa-btn">💬 WhatsApp</a>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-info">
+                <h3>Mr Biju Chandraose</h3>
+                <span class="contact-role">Secretary</span>
+            </div>
+            <div class="contact-actions">
+                <a href="tel:+447730532939" class="action-btn call-btn">📞 Call</a>
+                <a href="https://wa.me/447730532939" target="_blank" class="action-btn wa-btn">💬 WhatsApp</a>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-info">
+                <h3>Mrs Julie Justine</h3>
+                <span class="contact-role">Arts Coordinator</span>
+            </div>
+            <div class="contact-actions">
+                <a href="tel:+447459194121" class="action-btn call-btn">📞 Call</a>
+                <a href="https://wa.me/447459194121" target="_blank" class="action-btn wa-btn">💬 WhatsApp</a>
+            </div>
+        </div>
+        <button class="back-btn" onclick="closeContact()">Back to Home 🏠</button>
+    </div>
+
+    <!-- Page 2 Card -->
+    <div class="card" id="inviteCard">
+        <button class="page2-back-btn" onclick="closeEnvelope()">Back to Home 🏠</button>
+    </div>
+</div>
+
+<script>
+const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+
+function startAudio() {
+    if (!music) return;
+    music.muted = false;
+    
+    const playPromise = music.play();
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            musicBtn.innerText = "🔊";
+            document.removeEventListener('click', startAudio, true);
+            document.removeEventListener('touchstart', startAudio, true);
+        }).catch((err) => {
+            console.log("Autoplay prevented:", err);
+        });
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    startAudio();
+});
+
+document.addEventListener('click', startAudio, true);
+document.addEventListener('touchstart', startAudio, true);
+
+function toggleMusic() {
+    if (!music) return;
+    if (music.paused || music.muted) { 
+        music.muted = false;
+        music.play(); 
+        musicBtn.innerText = "🔊"; 
+    } else { 
+        music.pause(); 
+        musicBtn.innerText = "🔇"; 
+    }
+}
+
+function openEnvelope(event) {
+    if (event && event.stopPropagation) {
+        event.stopPropagation();
+    }
+    document.getElementById('envelope').classList.add('open');
+    document.getElementById('inviteCard').classList.add('reveal');
+}
+
+function closeEnvelope() {
+    document.getElementById('inviteCard').classList.remove('reveal');
+    document.getElementById('envelope').classList.remove('open');
+}
+
+function openContact() {
+    document.getElementById('contactPage').classList.add('active');
+}
+
+function closeContact() {
+    document.getElementById('contactPage').classList.remove('active');
+}
+
+function openHighlights() {
+    document.getElementById('highlightsPage').classList.add('active');
+}
+
+function closeHighlights() {
+    document.getElementById('highlightsPage').classList.remove('active');
+}
+
+function openBankDetails() {
+    document.getElementById('bankPage').classList.add('active');
+}
+
+function closeBankDetails() {
+    document.getElementById('bankPage').classList.remove('active');
+}
+
+const eventDate = new Date("September 6, 2026 10:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const difference = eventDate - now;
+
+    if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = String(days).padStart(2, '0');
+        document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+        document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+        document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+    } else {
+        document.querySelector(".countdown-container").innerHTML = "<div class='countdown-title'>🎉 Event Has Started! 🎉</div>";
+    }
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+function copyToClipboard(elementId, btnElement) {
+    const textToCopy = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = btnElement.innerText;
+        btnElement.innerText = "Copied!";
+        btnElement.style.background = "#25d366";
+        btnElement.style.color = "#ffffff";
+        btnElement.style.borderColor = "#25d366";
+        
+        setTimeout(() => {
+            btnElement.innerText = originalText;
+            btnElement.style.background = "rgba(212, 175, 55, 0.2)";
+            btnElement.style.color = "#ffd700";
+            btnElement.style.borderColor = "#d4af37";
+        }, 1800);
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
+}
+function openPoll() {
+    document.getElementById('pollPage').classList.add('active');
+}
+
+function closePoll() {
+    document.getElementById('pollPage').classList.remove('active');
+}
+</script>
+</body>
+</html>
