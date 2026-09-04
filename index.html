@@ -675,7 +675,8 @@
 
 <div class="invite-container">
     <div class="envelope" id="envelope" onclick="openEnvelope(event)">
-        <video autoplay loop muted playsinline class="bg-video">
+        <!-- Video Background Layer with enhanced inline/mobile attributes -->
+        <video id="bgVideo" autoplay loop muted playsinline webkit-playsinline preload="auto" class="bg-video">
             <source src="bgnk.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -905,29 +906,31 @@
 <script>
 const music = document.getElementById('bgMusic');
 const musicBtn = document.getElementById('musicBtn');
+const bgVideo = document.getElementById('bgVideo');
 
-function startAudio() {
-    if (!music) return;
-    music.muted = false;
-    
-    const playPromise = music.play();
-    if (playPromise !== undefined) {
-        playPromise.then(() => {
-            musicBtn.innerText = "🔊";
-            document.removeEventListener('click', startAudio, true);
-            document.removeEventListener('touchstart', startAudio, true);
-        }).catch((err) => {
-            console.log("Autoplay prevented:", err);
-        });
+// Force video play on touch/click for mobile browsers restricting autoplay
+function initMedia() {
+    if (bgVideo) {
+        bgVideo.muted = true;
+        bgVideo.play().catch(err => console.log("Video play deferred: ", err));
+    }
+    if (music) {
+        music.muted = false;
+        music.play().then(() => {
+            if (musicBtn) musicBtn.innerText = "🔊";
+        }).catch(err => console.log("Audio play deferred: ", err));
     }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    startAudio();
+    if (bgVideo) {
+        bgVideo.muted = true;
+        bgVideo.play().catch(() => {});
+    }
 });
 
-document.addEventListener('click', startAudio, true);
-document.addEventListener('touchstart', startAudio, true);
+document.addEventListener('click', initMedia, { once: false });
+document.addEventListener('touchstart', initMedia, { once: false });
 
 function toggleMusic() {
     if (!music) return;
